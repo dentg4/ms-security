@@ -3,14 +3,14 @@ package com.codigo.clinica.mssecurity.controller;
 import com.codigo.clinica.mssecurity.entities.User;
 import com.codigo.clinica.mssecurity.request.SignInRequest;
 import com.codigo.clinica.mssecurity.request.SignUpRequest;
+import com.codigo.clinica.mssecurity.request.TokenRequest;
 import com.codigo.clinica.mssecurity.response.AuthenticationResponse;
+import com.codigo.clinica.mssecurity.response.TokenResponse;
 import com.codigo.clinica.mssecurity.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -32,5 +32,12 @@ public class AuthenticationController {
     @PostMapping("/signin")
     public ResponseEntity<AuthenticationResponse> signIn(@RequestBody SignInRequest signInRequest){
         return ResponseEntity.ok(authenticationService.signIn(signInRequest));
+    }
+    @PostMapping("/validatetoken")
+    public ResponseEntity<TokenResponse> validateToken(@RequestBody TokenRequest tokenRequest){
+        System.out.println(tokenRequest.getToken());
+        TokenResponse tokenResponse = authenticationService.validateToken(tokenRequest);
+        if(tokenResponse == null) return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+        return ResponseEntity.ok(tokenResponse);
     }
 }

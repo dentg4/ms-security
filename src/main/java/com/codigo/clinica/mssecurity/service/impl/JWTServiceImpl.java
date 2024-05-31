@@ -54,7 +54,8 @@ public class JWTServiceImpl implements JWTService {
         return Keys.hmacShaKeyFor(key);
     }
 
-    private Claims extractAllClaims(String token){
+    @Override
+    public Claims extractAllClaims(String token){
         return Jwts.parserBuilder().setSigningKey(getSignKey()).build().parseClaimsJws(token).getBody();
     }
 
@@ -63,7 +64,8 @@ public class JWTServiceImpl implements JWTService {
         return claimsResult.apply(claims);
     }
 
-    private boolean isTokenExpired(String token){
+    @Override
+    public boolean isTokenExpired(String token){
         return extractClaims(token,Claims::getExpiration).before(new Date());
     }
 }
