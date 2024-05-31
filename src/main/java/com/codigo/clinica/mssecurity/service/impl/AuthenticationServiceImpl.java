@@ -29,7 +29,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final JWTService jwtService;
 
-
     @Transactional
     @Override
     public User signUpUser(SignUpRequest signUpRequest) {
@@ -38,7 +37,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         user.setSurname(signUpRequest.getSurname());
         user.setEmail(signUpRequest.getEmail());
         Set<Rol> assignedRoles = new HashSet<>();
-        Rol userRole = rolRepository.findByRolName(Role.USER.name()).orElseThrow(() -> new RuntimeException("Error: Rol no encontrado."));
+        Rol userRole = rolRepository.findByRolName(Role.USER.name()).orElseThrow(() -> new RuntimeException("Error: Rol not found."));
         assignedRoles.add(userRole);
         user.setRoles(assignedRoles);
         user.setPassword(new BCryptPasswordEncoder().encode(signUpRequest.getPassword()));
@@ -52,7 +51,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         user.setSurname(signUpRequest.getSurname());
         user.setEmail(signUpRequest.getEmail());
         Set<Rol> assignedRoles = new HashSet<>();
-        Rol userRole = rolRepository.findByRolName(Role.ADMIN.name()).orElseThrow(() -> new RuntimeException("Error: Rol no encontrado."));
+        Rol userRole = rolRepository.findByRolName(Role.ADMIN.name()).orElseThrow(() -> new RuntimeException("Error: Rol not found."));
         assignedRoles.add(userRole);
         user.setRoles(assignedRoles);
         user.setPassword(new BCryptPasswordEncoder().encode(signUpRequest.getPassword()));
@@ -61,7 +60,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public AuthenticationResponse signin(SignInRequest signInRequest) {
+    public AuthenticationResponse signIn(SignInRequest signInRequest) {
     authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
             signInRequest.getEmail(),signInRequest.getPassword()));
         var user = userRepository.findByEmail(signInRequest.getEmail()).orElseThrow(

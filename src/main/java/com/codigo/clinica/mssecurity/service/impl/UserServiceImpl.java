@@ -16,6 +16,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+
     @Override
     public UserDetailsService userDetailService() {
         return new UserDetailsService() {

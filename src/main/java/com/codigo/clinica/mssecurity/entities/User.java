@@ -11,23 +11,27 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-
 @Data
 @Entity
-@Table(name = "\"user\"")
+@Table(name = "users")
 public class User implements UserDetails {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
+
     private String surname;
+
+    @Column(unique = true)
     private String email;
+
     private String password;
-    @ManyToMany(fetch = FetchType.EAGER)
+
     @JoinTable(name = "user_rol",
-            joinColumns = @JoinColumn(name = "id_usuar"),
-            inverseJoinColumns = @JoinColumn(name = "id_rol"))
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "rol_id"))
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Rol> roles = new HashSet<>();
 
 

@@ -8,5 +8,5 @@ import com.codigo.clinica.mssecurity.response.AuthenticationResponse;
 public interface AuthenticationService {
     User signUpUser(SignUpRequest signUpRequest);
     User signUpAdmin(SignUpRequest signUpRequest);
-    AuthenticationResponse signin(SignInRequest signInRequest);
+    AuthenticationResponse signIn(SignInRequest signInRequest);
 }
