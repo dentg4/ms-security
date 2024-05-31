@@ -35,7 +35,6 @@ public class AuthenticationController {
     }
     @PostMapping("/validatetoken")
     public ResponseEntity<TokenResponse> validateToken(@RequestBody TokenRequest tokenRequest){
-        System.out.println(tokenRequest.getToken());
         TokenResponse tokenResponse = authenticationService.validateToken(tokenRequest);
         if(tokenResponse == null) return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
         return ResponseEntity.ok(tokenResponse);
