@@ -7,6 +7,7 @@ import com.codigo.clinica.mssecurity.request.TokenRequest;
 import com.codigo.clinica.mssecurity.response.AuthenticationResponse;
 import com.codigo.clinica.mssecurity.response.TokenResponse;
 import com.codigo.clinica.mssecurity.service.AuthenticationService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,17 +21,17 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/signupuser")
-    public ResponseEntity<User> signUpUser(@RequestBody SignUpRequest signUpRequest){
+    public ResponseEntity<User> signUpUser(@Valid @RequestBody SignUpRequest signUpRequest){
         return ResponseEntity.ok(authenticationService.signUpUser(signUpRequest));
     }
 
     @PostMapping("/signupadmin")
-    public ResponseEntity<User> signUpAdmin(@RequestBody SignUpRequest signUpRequest){
+    public ResponseEntity<User> signUpAdmin(@Valid @RequestBody SignUpRequest signUpRequest){
         return ResponseEntity.ok(authenticationService.signUpAdmin(signUpRequest));
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<AuthenticationResponse> signIn(@RequestBody SignInRequest signInRequest){
+    public ResponseEntity<AuthenticationResponse> signIn(@Valid @RequestBody SignInRequest signInRequest){
         return ResponseEntity.ok(authenticationService.signIn(signInRequest));
     }
     @PostMapping("/validatetoken")
